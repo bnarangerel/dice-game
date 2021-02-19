@@ -1,11 +1,17 @@
 //Тоглогчийн ээлжийг хадгалах хувьсагч player1 = 0, player2 = 1 
-var activePlayer = 0;
+var activePlayer;
 //Тоглогчдын цуглуулсан оноог хадгалах хувьсагч
-var score = [90, 0];
+var score;
 //Тоглогчийн ээлжийн оноог хадгалах хувьсагч
-var roundScore = 0;
-                                            //Програм эхлэх
+var roundScore;
+//ялсан тоглогч
+var winner = 0;
+                              //Програм эхлэх
 function start(){
+    activePlayer = 0;
+    score= [90,0];
+    roundScore = 0;
+
     document.getElementById("score-0").textContent = "0";
     document.getElementById("score-1").textContent = "0";
 
@@ -13,9 +19,15 @@ function start(){
     document.getElementById("current-1").textContent = "0";
 
     document.querySelector(".dice").style.display = "none";
+
+    //winner бичгийг арилгаж, activeг идэвхжүүлэх
+    document.getElementById("name-" + winner).textContent = "Player " + (winner + 1);
+    document.querySelector(".player-" + winner + "-panel").classList.remove("winner");
+    document.querySelector(".player-0-panel").classList.add("active");
+    document.querySelector(".player-1-panel").classList.remove("active");
 }
 start();
-                                            //Ээлж солих
+                               //Ээлж солих
 function eeljSolih(){
     //current score цуцлагдана 
     roundScore = 0;
@@ -27,7 +39,7 @@ function eeljSolih(){
     //active байгаа тоглогчийг солих
     document.querySelector(".player-"+ activePlayer +"-panel").classList.add("active");
 }
-                                    //ROLL DICE дээр дарахад шоо шидэх хэсэг
+                               //ROLL DICE дээр дарахад шоо шидэх хэсэг
 var diceDom = document.querySelector(".dice");
 document.querySelector(".btn-roll").addEventListener("click", function(){
     //санамсаргүйгээр 1-6 тоо гарч ирнэ
@@ -57,6 +69,7 @@ document.querySelector(".btn-hold").addEventListener("click", function(){
     document.getElementById("score-" + activePlayer).textContent = score[activePlayer]; 
    //Тоглогчийн оноо 100с их болвол хожно
     if(score[activePlayer] >= 100){
+        winner = activePlayer;
         document.getElementById("name-" + activePlayer).textContent = "WINNER!";
         document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
         document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
@@ -68,13 +81,4 @@ document.querySelector(".btn-hold").addEventListener("click", function(){
 });
 
                                     //NEW GAME товч дарсан үед
-document.querySelector(".btn-new").addEventListener("click", function(){
-    //Тоглолтыг шинээр эхлүүлнэ
-    if(activePlayer === 1) 
-        document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
-        document.querySelector(".player-0-panel").classList.add("active");
-    start();
-    score[0, 0];
-    activePlayer = 0;
-    roundScore = 0;
-});
+document.querySelector(".btn-new").addEventListener("click", start);
