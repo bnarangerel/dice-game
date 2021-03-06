@@ -13,7 +13,7 @@ start();
 function start(){
     isNewGame = true;
     activePlayer = 0;
-    score= [90,0];
+    score= [0,0];
     roundScore = 0;
 
     document.getElementById("score-0").textContent = "0";
